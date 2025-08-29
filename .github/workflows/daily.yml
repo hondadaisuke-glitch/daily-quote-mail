@@ -1,23 +1,23 @@
 name: send-daily-quote-mail
 
 on:
-  schedule:
-    # 日本時間 08:00 = UTC 23:00
-    - cron: "0 23 * * *"
-  workflow_dispatch: {}  # ← 手動実行ボタンを出す
+  schedule:
+    # 日本時間 08:00 = UTC 23:00（前日）
+    - cron: "0 23 * * *"
+  workflow_dispatch: {}  # 手動実行ボタン
 
 jobs:
-  send:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-      - name: Send email
-        env:
-          YAHOO_USER: ${{ secrets.YAHOO_USER }}
-          YAHOO_PASS: ${{ secrets.YAHOO_PASS }}
-          MAIL_TO: ${{ secrets.MAIL_TO }}
-        run: |
-          python send_mail.py
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Send email
+        env:
+          YAHOO_USER: ${{ secrets.YAHOO_USER }}
+          YAHOO_PASS: ${{ secrets.YAHOO_PASS }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+        run: |
+          python send_mail.py
